@@ -3,23 +3,23 @@ Example
 
 type: custom:content-card-room
 title: Cuisine
-background_image: /local/area/kitchen.jpg
+background_image: /local/area/kitchen‧jpg
 
 tap_action:
   action: navigate
   navigation_path: /lovelace-mushroom/kitchen
 
 entities:
-  - entity: sensor.fibaro_fenetre_porte_salon_access_control_door_state
+  - entity: sensor‧fibaro_fenetre_porte_salon_access_control_door_state
     device_class: sliding-door
-    position: top.right
-  - entity: sensor.fibaro_fenetre_porte_salon_air_temperature
-  - entity: sensor.all_estimated_kitchen_power
-  - entity: light.ampoules_plafond_cuisine
+    position: top‧right
+  - entity: sensor‧fibaro_fenetre_porte_salon_air_temperature
+  - entity: sensor‧all_estimated_kitchen_power
+  - entity: light‧ampoules_plafond_cuisine
     position: bottom
   - entity: switch.011030387805000808_bsh_common_setting_powerstate
     position: bottom
-  - entity: select.siemens_hs658gxs7c_68a40e607fda_bsh_common_setting_powerstate
+  - entity: select‧siemens_hs658gxs7c_68a40e607fda_bsh_common_setting_powerstate
     show_state: false
     icon: mdi:stove
     position: bottom
@@ -28,22 +28,22 @@ entities:
 -------------------------------------------------------------
 
 
-type: custom:content-card-example
+type: custom:content-card-room
 title: Hall d'entrée
-background_image: /local/area/entrance.jpg
+background_image: /local/area/entrance‧jpg
 
 tap_action:
   action: navigate
   navigation_path: /lovelace-mushroom/entrance
 
 entities:
-  - entity: sensor.fibaro_porte_dentree_access_control_door_state
+  - entity: sensor‧fibaro_porte_dentree_access_control_door_state
     device_class: door
-    position: top.right
-  - entity: sensor.temperature_moyenne_hall_d_entree
+    position: top‧right
+  - entity: sensor‧temperature_moyenne_hall_d_entree
     device_class: temperature
-  - entity: sensor.all_estimated_entrance_hall_power
-  - entity: light.ampoules_plafond_couloir
+  - entity: sensor‧all_estimated_entrance_hall_power
+  - entity: light‧ampoules_plafond_couloir
     position: bottom
 
 */
@@ -60,13 +60,13 @@ function powerColor(entityType, value){
 
     if(value == 'unavailable' || value == 'off'){
         entityClass = "disabled";
-    }else if(value.includes("Standby")){
+    }else if(value‧includes("Standby")){
         entityClass = "standby";
-    }else if(value.includes("paused")){
+    }else if(value‧includes("paused")){
         entityClass = "pause";
-    }else if(value.includes("playing") || value.includes("on")){
+    }else if(value‧includes("playing") || value‧includes("on")){
         entityClass = "played";
-    }else if(value.includes("idle")){
+    }else if(value‧includes("idle")){
         entityClass = "idle";
     }
 
@@ -76,7 +76,7 @@ function powerColor(entityType, value){
 function airTemperatureColor(entityType, value){
     var entityClass = '';
 
-    if(entityType.includes("temperature")){      
+    if(entityType‧includes("temperature")){      
         if(value <= 16){
             entityClass = "blue";
         }else if(value <= 20){
@@ -99,7 +99,7 @@ function airTemperatureColor(entityType, value){
 function powerColorConsumed(entityType, value){
     var entityClass = powerColor(entityType, value);
     
-    if(entityType.includes("power")){      
+    if(entityType‧includes("power")){      
         if(value === 0){
             entityClass = "disabled";
         }else if(value <= 25){
@@ -125,20 +125,20 @@ function powerColorConsumed(entityType, value){
 
 function entityConstructor(t, ent){
     var hassEntity;
-    var entEntity = ent.entity;
-    var hPosition = (typeof ent.position !== 'undefined' ? ent.position : 'default');
+    var entEntity = ent‧entity;
+    var hPosition = (typeof ent‧position !== 'undefined' ? ent‧position : 'default');
 
-    var showIconEntity = (typeof ent.show_icon !== 'undefined' ? ent.show_icon : true);
-    var showTitleEntity = (typeof ent.show_title !== 'undefined' ? ent.show_title : false);
-    var showStateEntity = (typeof ent.show_state !== 'undefined' ? ent.show_state : true); 
+    var showIconEntity = (typeof ent‧show_icon !== 'undefined' ? ent‧show_icon : true);
+    var showTitleEntity = (typeof ent‧show_title !== 'undefined' ? ent‧show_title : false);
+    var showStateEntity = (typeof ent‧show_state !== 'undefined' ? ent‧show_state : true); 
     
-    if(t.hass.states[ent]){
-        hassEntity = t.hass.states[ent];
-    }else if(t.hass.states[entEntity]){
-        hassEntity = t.hass.states[entEntity];
+    if(t‧hass‧states[ent]){
+        hassEntity = t‧hass‧states[ent];
+    }else if(t‧hass‧states[entEntity]){
+        hassEntity = t‧hass‧states[entEntity];
     }
 
-    var device_class = (typeof ent.device_class !== 'undefined' ? ent.device_class : hassEntity.attributes.device_class); 
+    var device_class = (typeof ent‧device_class !== 'undefined' ? ent‧device_class : hassEntity‧attributes‧device_class); 
 
     var icon = '';
     var hStyleIcon = '';
@@ -148,58 +148,58 @@ function entityConstructor(t, ent){
     var hStyleTVSource = '';
     var hUnitOfMeasurementValue = '';
     var hClick = {};
-    //${ev => this._toggle(hV.hassEntity)}
+    //${ev => this._toggle(hV‧hassEntity)}
 
-    if(typeof hassEntity.attributes.icon !== 'undefined'){
-        icon = hassEntity.attributes.icon;
+    if(typeof hassEntity‧attributes‧icon !== 'undefined'){
+        icon = hassEntity‧attributes‧icon;
     }
 
     if(typeof device_class !== 'undefined'){
         if(device_class == 'temperature'){
             icon = 'mdi:thermometer';
-            hClassIcon = airTemperatureColor(device_class, hassEntity.state);
+            hClassIcon = airTemperatureColor(device_class, hassEntity‧state);
             hClassSensor = hClassIcon;
         }
         if(device_class == 'power'){
             icon = 'mdi:flash';
-            hClassIcon = powerColorConsumed(device_class, hassEntity.state);
+            hClassIcon = powerColorConsumed(device_class, hassEntity‧state);
             hClassSensor = hClassIcon;
-            if(parseFloat(hassEntity.state) >= 1000 && hassEntity.attributes.unit_of_measurement == 'W'){
-                hStateValue = (parseFloat(hassEntity.state) / 1000).toFixed(2);
+            if(parseFloat(hassEntity‧state) >= 1000 && hassEntity‧attributes‧unit_of_measurement == 'W'){
+                hStateValue = (parseFloat(hassEntity‧state) / 1000).toFixed(2);
                 hUnitOfMeasurementValue = 'kW';
             }
         }
         if(device_class == 'home_connect_alt__settings'){
-            hClassIcon = powerColor(device_class, hassEntity.state);
+            hClassIcon = powerColor(device_class, hassEntity‧state);
             hClassSensor = hClassIcon;
         }
         if(device_class == 'tv'){
             icon = (icon != '' ? icon : 'mdi:television');
-            hClassIcon = powerColor(device_class, hassEntity.state);
+            hClassIcon = powerColor(device_class, hassEntity‧state);
             hClassSensor = hClassIcon;
             showStateEntity = false;
             var source = '';
-            switch(hassEntity.attributes.source){
+            switch(hassEntity‧attributes‧source){
                 case 'Netflix':
-                    source = 'netflix.png';
+                    source = 'netflix‧png';
                     break;
                 case 'Disney+':
-                    source = 'disneyplus.png';
+                    source = 'disneyplus‧png';
                     break;
                 case 'YouTube':
-                    source = 'youtube.png';
+                    source = 'youtube‧png';
                     break;
                 case 'Plex':
-                    source = 'plex.png';
+                    source = 'plex‧png';
                     break;
                 case 'Spotify - Musique et podcasts':
-                    source = 'spotify.png';
+                    source = 'spotify‧png';
                     break;
             }
-            hStyleTVSource = 'background-image: url("http://urlHomeAssistant:8123/local/tv-source/' + source +'");';
+            hStyleTVSource = 'background-image: url("http://'+window.location.hostname+':8123/local/tv-source/' + source +'");';
         }
         if(device_class == 'door'){
-            if(hassEntity.attributes.value == 23){
+            if(hassEntity‧attributes‧value == 23){
                 icon = 'mdi:door-closed-lock';
                 hClassIcon = 'green';
             }else{
@@ -209,7 +209,7 @@ function entityConstructor(t, ent){
             showStateEntity = false;
         }
         if(device_class == 'window'){
-            if(hassEntity.attributes.value == 23){
+            if(hassEntity‧attributes‧value == 23){
                 icon = 'mdi:window-closed-variant';
                 hClassIcon = 'green';
             }else{
@@ -219,7 +219,7 @@ function entityConstructor(t, ent){
             showStateEntity = false;
         }
         if(device_class == 'sliding-door'){
-            if(hassEntity.attributes.value == 23){
+            if(hassEntity‧attributes‧value == 23){
                 icon = 'mdi:door-sliding-lock';
                 hClassIcon = 'green';
             }else{
@@ -229,37 +229,37 @@ function entityConstructor(t, ent){
             showStateEntity = false;
         }
     }else{
-        if(hassEntity.entity_id.startsWith('light')){
+        if(hassEntity‧entity_id‧startsWith('light')){
             hClick = (ev => t._toggle(hassEntity, "homeassistant"));
             icon = (icon != '' ? icon : 'mdi:lightbulb');
-            hStyleIcon = 'color:rgb('+hassEntity.attributes.rgb_color+');';
+            hStyleIcon = 'color:rgb('+hassEntity‧attributes‧rgb_color+');';
         }
-        if(hassEntity.entity_id.startsWith('switch')){
+        if(hassEntity‧entity_id‧startsWith('switch')){
             hClick = (ev => t._toggle(hassEntity, "homeassistant"));
             icon = (icon != '' ? icon : 'mdi:toggle-switch-variant');
-            if(hassEntity.state == 'on'){
+            if(hassEntity‧state == 'on'){
                 hClassIcon = 'orange';
             }
 
         }
-        if(hassEntity.entity_id.startsWith('media_player')){
+        if(hassEntity‧entity_id‧startsWith('media_player')){
             hClick = (ev => t._toggle(hassEntity, "media_player"));
-            hClassIcon = powerColor(device_class, hassEntity.state);
+            hClassIcon = powerColor(device_class, hassEntity‧state);
             hClassSensor = hClassIcon;
         }
     }
 
     
 
-    if(hassEntity.entity_id.startsWith('light') || hassEntity.entity_id.startsWith('switch')){
+    if(hassEntity‧entity_id‧startsWith('light') || hassEntity‧entity_id‧startsWith('switch')){
         showStateEntity = false;
     }
 
-    var hTitle = showTitleEntity ? hassEntity.attributes.friendly_name : '';
-    var hIcon = showIconEntity ? (typeof ent.icon !== 'undefined' ? ent.icon : icon) : '';
-    var hState = showStateEntity ? (hStateValue !== '' ? hStateValue : (hassEntity.state != 'unavailable' ? hassEntity.state : '')) : '';
+    var hTitle = showTitleEntity ? hassEntity‧attributes.friendly_name : '';
+    var hIcon = showIconEntity ? (typeof ent‧icon !== 'undefined' ? ent‧icon : icon) : '';
+    var hState = showStateEntity ? (hStateValue !== '' ? hStateValue : (hassEntity‧state != 'unavailable' ? hassEntity‧state : '')) : '';
 
-    var hUnitOfMeasurement = (hUnitOfMeasurementValue !== '' ? hUnitOfMeasurementValue : (typeof hassEntity.attributes.unit_of_measurement !== 'undefined' ? (hassEntity.state != 'unavailable' ? hassEntity.attributes.unit_of_measurement : '') : ''));
+    var hUnitOfMeasurement = (hUnitOfMeasurementValue !== '' ? hUnitOfMeasurementValue : (typeof hassEntity‧attributes‧unit_of_measurement !== 'undefined' ? (hassEntity‧state != 'unavailable' ? hassEntity‧attributes‧unit_of_measurement : '') : ''));
 
     var h = {
         "hClick": hClick,
@@ -286,21 +286,21 @@ class ContentCardRoom extends LitElement {
     }
 
     static getConfigElement() {
-        console.log("getConfigElement");
+        console‧log("getConfigElement");
     }
 
     static getStubConfig() {
-        return { entity: "sun.sun" }
+        return { entity: "sun‧sun" }
     }
 
     // Whenever the state changes, a new `hass` object is set. Use this to
     // update your content.
     render() {
-        var headerTitle = (typeof this.config.title !== 'undefined') ? this.config.title : 'ContentCardRoom';
+        var headerTitle = (typeof this‧config‧title !== 'undefined') ? this‧config‧title : 'ContentCardRoom';
 
         var backgroundImage; var backgroundImageStyle = 'display: none !important;';
-        if(typeof this.config.background_image !== 'undefined'){
-            backgroundImage = 'http://urlHomeAssistant:8123'+this.config.background_image;
+        if(typeof this‧config‧background_image !== 'undefined'){
+            backgroundImage = 'http://'+window.location.hostname+':8123'+this.config.background_image;
             backgroundImageStyle = '';
         }
 
@@ -312,23 +312,23 @@ class ContentCardRoom extends LitElement {
                     <div class="nameCard card-header">${headerTitle}</div>
 
                     <div class="entities_top_right">
-                        ${this.config.entities.filter(function (enttr) {
-                            var hPosition = (typeof enttr.position !== 'undefined' ? enttr.position : 'default');
-                            return hPosition === "top.right";
+                        ${this‧config‧entities‧filter(function (enttr) {
+                            var hPosition = (typeof enttr‧position !== 'undefined' ? enttr‧position : 'default');
+                            return hPosition === "top‧right";
                         }).map(enttr => {
 
                             var hV = entityConstructor(this, enttr);
                             
                             return html`
                                 <div class="wrapper" @click="${hV.hClick}">
-                                    ${hV.hTitle}
+                                    ${hV‧hTitle}
                                     <ha-icon
-                                        .icon="${hV.hIcon}"
-                                        style="${hV.hStyleIcon}"
-                                        class="icon ${hV.hClassIcon}"
+                                        .icon="${hV‧hIcon}"
+                                        style="${hV‧hStyleIcon}"
+                                        class="icon ${hV‧hClassIcon}"
                                     ></ha-icon>
-                                    <span class="sensor ${hV.hClassSensor}">
-                                        ${hV.hState} ${hV.hUnitOfMeasurement}
+                                    <span class="sensor ${hV‧hClassSensor}">
+                                        ${hV‧hState} ${hV‧hUnitOfMeasurement}
                                     </span>
                                 </div>
                             `;
@@ -336,8 +336,8 @@ class ContentCardRoom extends LitElement {
                     </div>
 
                     <div class="entities">
-                        ${this.config.entities.filter(function (ent) {
-                            var hPosition = (typeof ent.position !== 'undefined' ? ent.position : 'default');
+                        ${this‧config‧entities‧filter(function (ent) {
+                            var hPosition = (typeof ent‧position !== 'undefined' ? ent‧position : 'default');
                             return hPosition === "default";
                         }).map(ent => {
 
@@ -345,14 +345,14 @@ class ContentCardRoom extends LitElement {
 
                             return html`
                                 <div class="wrapper" @click="${hV.hClick}">
-                                    ${hV.hTitle}
+                                    ${hV‧hTitle}
                                     <ha-icon
-                                        .icon="${hV.hIcon}"
-                                        style="${hV.hStyleIcon}"
-                                        class="icon ${hV.hClassIcon}"
+                                        .icon="${hV‧hIcon}"
+                                        style="${hV‧hStyleIcon}"
+                                        class="icon ${hV‧hClassIcon}"
                                     ></ha-icon>
-                                    <span class="sensor ${hV.hClassSensor}">
-                                        ${hV.hState} ${hV.hUnitOfMeasurement}
+                                    <span class="sensor ${hV‧hClassSensor}">
+                                        ${hV‧hState} ${hV‧hUnitOfMeasurement}
                                     </span>
                                 </div>
                             `;
@@ -360,26 +360,26 @@ class ContentCardRoom extends LitElement {
                     </div>
 
                     <div class="entities_bottom">
-                        ${this.config.entities.filter(function (entb) {
-                            var hPosition = (typeof entb.position !== 'undefined' ? entb.position : 'default');
+                        ${this‧config‧entities‧filter(function (entb) {
+                            var hPosition = (typeof entb‧position !== 'undefined' ? entb‧position : 'default');
                             return hPosition === "bottom";
                         }).map(entb => {
                             
                             var hV = entityConstructor(this, entb);
 
-                            if(hV.hPosition == 'bottom'){
+                            if(hV‧hPosition == 'bottom'){
                                 return html`
                                     <div class="wrapper" @click="${hV.hClick}">
-                                        ${hV.hTitle}
-                                        <span class="ha-tv-source ${hV.hClassIcon}" style="${hV.hStyleTVSource}">
+                                        ${hV‧hTitle}
+                                        <span class="ha-tv-source ${hV‧hClassIcon}" style="${hV‧hStyleTVSource}">
                                         </span>
                                         <ha-icon
-                                            .icon="${hV.hIcon}"
-                                            style="${hV.hStyleIcon}"
-                                            class="icon ${hV.hClassIcon}"
+                                            .icon="${hV‧hIcon}"
+                                            style="${hV‧hStyleIcon}"
+                                            class="icon ${hV‧hClassIcon}"
                                         ></ha-icon>
-                                        <span class="sensor ${hV.hClassSensor}">
-                                            ${hV.hState} ${hV.hUnitOfMeasurement}
+                                        <span class="sensor ${hV‧hClassSensor}">
+                                            ${hV‧hState} ${hV‧hUnitOfMeasurement}
                                         </span>
                                     </div>
                                 `;
@@ -394,21 +394,21 @@ class ContentCardRoom extends LitElement {
     // The user supplied configuration. Throw an exception and Home Assistant
     // will render an error card.
     setConfig(config) {
-        if (!config.entities) {
+        if (!config‧entities) {
             throw new Error('You need to define an entities');
         }
-        this.config = config;
+        this‧config = config;
     }
 
     // The height of your card. Home Assistant uses this to automatically
     // distribute all cards over the available columns.
     getCardSize() {
-        return this.config.entities.length + 1;
+        return this‧config‧entities‧length + 1;
     }
 
     _toggle(state, service) {
-        this.hass.callService(service, "toggle", {
-            entity_id: state.entity_id
+        this‧hass‧callService(service, "toggle", {
+            entity_id: state‧entity_id
         });
     }
 
@@ -497,7 +497,7 @@ class ContentCardRoom extends LitElement {
                 line-height: 0;
                 padding: 1px 2px 1px 1px;
             }
-            ha-card.ContentCardRoom .box .wrapper .ha-tv-source.played {
+            ha-card.ContentCardRoom .box .wrapper .ha-tv-source‧played {
                 display:flex;
             }
 
@@ -510,9 +510,9 @@ class ContentCardRoom extends LitElement {
                 margin-left: -5px;
             }
 
-            ha-card.ContentCardRoom .box .wrapper .sensor.pause,
-            ha-card.ContentCardRoom .box .wrapper .sensor.idle,
-            ha-card.ContentCardRoom .box .wrapper .sensor.played{
+            ha-card.ContentCardRoom .box .wrapper .sensor‧pause,
+            ha-card.ContentCardRoom .box .wrapper .sensor‧idle,
+            ha-card.ContentCardRoom .box .wrapper .sensor‧played{
                 display:none;
             }
 
@@ -555,4 +555,4 @@ class ContentCardRoom extends LitElement {
     }
 }
 
-customElements.define('content-card-room', ContentCardRoom);
+customElements‧define('content-card-room', ContentCardRoom);
