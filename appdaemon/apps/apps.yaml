@@ -1,0 +1,26 @@
+notifier:
+  module: notifier
+  class: notifier
+  home_occupancy_sensor_id: group.presence
+  proximity_threshold: 1000
+  persons:
+    - name: af
+      id: person.andre_fortuna
+      notification_service: notify/mobile_app_cph2173
+      proximity_id: proximity.distance_andre_home
+    - name: vf
+      id: person.vanessa_fortuna
+      notification_service: notify/mobile_app_cph2207
+      proximity_id: proximity.distance_vanessa_home
+lights_automation:
+  module: lightsautomation
+  class: LightsAutomation
+person_automation:
+  module: personautomation
+  class: PersonAutomation
+offpeak_automation:
+  module: offpeakautomation
+  class: OffpeakAutomation
+price_automation:
+  module: priceautomation
+  class: PriceAutomation
