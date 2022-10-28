@@ -49,11 +49,7 @@ entities:
 */
 
 import handleClick  from "./hass/handleClick.js";
-import {
-    LitElement,
-    html,
-    css
-} from "https://unpkg.com/lit-element@2.0.1/lit-element.js?module";
+import {html, css, LitElement} from './core/lit-core.min.js';
 
 function powerColor(entityType, value){
     var entityClass = "";
@@ -159,8 +155,15 @@ function entityConstructor(t, ent){
             icon = 'mdi:thermometer';
             hClassIcon = airTemperatureColor(device_class, hassEntity.state);
             hClassSensor = hClassIcon;
-        }
-        if(device_class == 'power'){
+        }else if(device_class == 'duration'){
+            if(hassEntity.attributes.unit_of_measurement == 'h'){
+                var hm = (hassEntity.state).split('.');
+                var m = "" + (hm[1]/10) * 60;
+                var ms = m.split('.');
+                hStateValue = hm[0] + "h" + ms[0];
+                hUnitOfMeasurementValue = ' ';
+            }
+        }else if(device_class == 'power'){
             icon = 'mdi:flash';
             hClassIcon = powerColorConsumed(device_class, hassEntity.state);
             hClassSensor = hClassIcon;
@@ -168,12 +171,10 @@ function entityConstructor(t, ent){
                 hStateValue = (parseFloat(hassEntity.state) / 1000).toFixed(2);
                 hUnitOfMeasurementValue = 'kW';
             }
-        }
-        if(device_class == 'home_connect_alt__settings'){
+        }else if(device_class == 'home_connect_alt__settings'){
             hClassIcon = powerColor(device_class, hassEntity.state);
             hClassSensor = hClassIcon;
-        }
-        if(device_class == 'tv'){
+        }else if(device_class == 'tv'){
             icon = (icon != '' ? icon : 'mdi:television');
             hClassIcon = powerColor(device_class, hassEntity.state);
             hClassSensor = hClassIcon;
@@ -197,8 +198,7 @@ function entityConstructor(t, ent){
                     break;
             }
             hStyleTVSource = 'background-image: url("http://'+window.location.hostname+':8123/local/tv-source/' + source +'");';
-        }
-        if(device_class == 'door'){
+        }else if(device_class == 'door'){
             if(hassEntity.attributes.value == 23){
                 icon = 'mdi:door-closed-lock';
                 hClassIcon = 'green';
@@ -207,8 +207,7 @@ function entityConstructor(t, ent){
                 hClassIcon = 'red';
             }
             showStateEntity = false;
-        }
-        if(device_class == 'window'){
+        }else if(device_class == 'window'){
             if(hassEntity.attributes.value == 23){
                 icon = 'mdi:window-closed-variant';
                 hClassIcon = 'green';
@@ -217,8 +216,7 @@ function entityConstructor(t, ent){
                 hClassIcon = 'red';
             }
             showStateEntity = false;
-        }
-        if(device_class == 'sliding-door'){
+        }else if(device_class == 'sliding-door'){
             if(hassEntity.attributes.value == 23){
                 icon = 'mdi:door-sliding-lock';
                 hClassIcon = 'green';
@@ -499,6 +497,9 @@ class HatcRoomCard extends LitElement {
             }
             ha-card.HatcRoomCard .box .wrapper .sensor{
                 order: 2;
+                font-weight: bold;
+                font-size: 12px;
+                filter: opacity(95%);
             }
             ha-card.HatcRoomCard .box .wrapper .ha-icon-badge {
                 --mdc-icon-size: 12px;
