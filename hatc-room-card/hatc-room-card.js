@@ -158,9 +158,15 @@ function entityConstructor(t, ent){
         }else if(device_class == 'duration'){
             if(hassEntity.attributes.unit_of_measurement == 'h'){
                 var hm = (hassEntity.state).split('.');
-                var m = "" + (hm[1]/10) * 60;
-                var ms = m.split('.');
-                hStateValue = hm[0] + "h" + ms[0];
+                var _m = "" + parseFloat("0." + hm[1]) * 60;
+                var m = "";
+                console.log("m"+_m);
+                if(_m.includes(".")){
+                    m = _m.split('.')[0];
+                }else{
+                    m = _m;
+                }
+                hStateValue = hm[0] + "h" + m;
                 hUnitOfMeasurementValue = ' ';
             }
         }else if(device_class == 'power'){
