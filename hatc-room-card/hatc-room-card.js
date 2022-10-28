@@ -144,6 +144,8 @@ function entityConstructor(t, ent){
     var hStyleTVSource = '';
     var hUnitOfMeasurementValue = '';
     var hClick = {};
+
+    hClick = (ev => t._handleEntities(ev, ent));
     //${ev => this._toggle(hV.hassEntity)}
 
     if(typeof hassEntity.attributes.icon !== 'undefined'){
@@ -424,7 +426,36 @@ class HatcRoomCard extends LitElement {
             return;
         }
         e.stopPropagation();
+        console.log("this.config:"+ JSON.stringify(this.config));
+        console.log("this.config.tap_action:"+ this.config.tap_action);
         handleClick(this, this.hass, this.config.tap_action, false);
+    }
+
+    _handleEntities(e, entity) {
+        var ent = entity || {};
+
+        console.log("entity:"+ JSON.stringify(entity));
+        console.log("ent:"+ JSON.stringify(ent));
+        console.log("_handleEntities called");
+        console.log("e", e);
+        
+        if (!ent['tap_action']) {
+            ent = {
+                tap_action: {
+                    action: "more-info",
+                    ...ent
+                }
+            }
+            console.log("tap_action empty");
+        }
+        
+        console.log("ent.tap_action:"+ ent.tap_action);
+        console.log("ent.tap_action.action:"+ ent.tap_action.action);
+        console.log("ent['tap_action']:"+ ent['tap_action']);
+        console.log("ent:"+ JSON.stringify(ent));
+        
+        e.stopPropagation();
+        handleClick(this, this.hass, ent.tap_action, false);
     }
 
     static get styles() {
