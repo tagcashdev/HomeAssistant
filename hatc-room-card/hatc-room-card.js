@@ -360,7 +360,7 @@ class HatcRoomCard extends LitElement {
                         })}
                     </div>
 
-                    <div class="entities_bottom">
+                    <div class="entities_bottom_right">
                         ${this.config.entities.filter(function (entb) {
                             var hPosition = (typeof entb.position !== 'undefined' ? entb.position : 'default');
                             return hPosition === "bottom";
@@ -437,37 +437,68 @@ class HatcRoomCard extends LitElement {
                 overflow:hidden;
                 border: 0px;
             }
+
             ha-card.HatcRoomCard .box .card-header {
-                padding: 5px 10px;
+                position: absolute;
+                top: 5px;
+                left: 7px;
                 font-weight: bold;
-                font-size: 1.2em;
-            }
-            ha-card.HatcRoomCard .box .entities {
-                white-space: nowrap;
-                margin-top: -5px;
-                margin-bottom: -18px;
-                min-height: 10px;
-                font-size: 0.9em;
-                padding: 5px 10px 5px 5px;
+                font-size: 1.1em;
             }
 
-            ha-card.HatcRoomCard .box .entities_bottom, ha-card.HatcRoomCard .box .entities_bottom_right {
+            ha-card.HatcRoomCard .box .entities {
+                display: flex;
+                position: absolute;
+                top: 25px;
+                left: 7px;
+                flex-flow: row wrap;
+                place-content: center flex-start;
+                align-items: center;
+                gap: 3px;
+            }
+
+            ha-card.HatcRoomCard .box .entities_bottom_right {
+                display: flex;
                 position: absolute;
                 bottom: 5px;
-                right: 10px;
+                right: 7px;
+                align-items: center;
+                flex-flow: row wrap;
+                place-content: center flex-end;
+                gap: 3px;
             }
 
             ha-card.HatcRoomCard .box .entities_top_right {
+                display: flex;
+                place-content: center flex-end;
+                flex-flow: row-reverse nowrap;
+                align-items: center;
                 position: absolute;
                 top: 5px;
-                right: 10px;
+                right: 7px;
+                gap: 3px;
             }
 
             ha-card.HatcRoomCard .box .wrapper {
-                display: inline-block;
-                vertical-align: middle;
-                height: 24px;
-                min-width: 24px;
+                display: inline-flex;
+                align-items: center;
+                flex-flow: row nowrap;
+                place-content: center flex-start;
+            }
+            ha-card.HatcRoomCard .box .entities .wrapper, ha-card.HatcRoomCard .box .entities_top_right .wrapper{
+                height: 17px;
+                min-width: 17px;       
+            }
+            ha-card.HatcRoomCard .box .entities .wrapper{
+                gap: 3px;
+            }  
+
+
+            ha-card.HatcRoomCard .box .wrapper .icon {
+                order: 1;
+            }
+            ha-card.HatcRoomCard .box .wrapper .sensor{
+                order: 2;
             }
             ha-card.HatcRoomCard .box .wrapper .ha-icon-badge {
                 --mdc-icon-size: 12px;
@@ -502,7 +533,6 @@ class HatcRoomCard extends LitElement {
                 border-radius: 0;
                 text-align: center;
                 font-size: 7px;
-                margin-top: 5px;
                 margin-left: 3px;
                 align-items: center;
                 justify-content: center;
@@ -511,15 +541,6 @@ class HatcRoomCard extends LitElement {
             }
             ha-card.HatcRoomCard .box .wrapper .ha-tv-source.played {
                 display:block;
-            }
-
-            ha-card.HatcRoomCard .box .entities .wrapper, ha-card.HatcRoomCard .box .entities_top_right .wrapper{
-                height: 17px;
-                min-width: 17px;                
-            }
-
-            ha-card.HatcRoomCard .box .wrapper .sensor{
-                margin-left: -5px;
             }
 
             ha-card.HatcRoomCard .box .wrapper .sensor.pause,
