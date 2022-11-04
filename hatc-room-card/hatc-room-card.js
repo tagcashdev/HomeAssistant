@@ -462,6 +462,11 @@ class HatcRoomCard extends LitElement {
         return css`
             :root, .HatcRoomCard .box .entities, .HatcRoomCard .box .entities_top_right{
                 --mdc-icon-size: 16px;
+                
+            }
+            .HatcRoomCard > *{
+               --primary-text-color: white; 
+               color: white;
             }
 
             ha-card.HatcRoomCard{
