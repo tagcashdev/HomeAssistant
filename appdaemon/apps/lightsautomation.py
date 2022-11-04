@@ -18,21 +18,22 @@ class LightsAutomation(hass.Hass):
             "light.ampoule_plafond_3_couloir"
         ]
         self.log("Hello from AppDaemon : LightsAutomation")
-        self.listen_state(self.callback_motion, "binary_sensor.sensor_motion_fibaro_home_security_motion_detection", new = "on")
+        self.listen_state(self.callback_motion, "binary_sensor.motion_sensor_motion_detection", new = "on")
         self.listen_state(self.callback_autoLight, lights, new = "on")
 
     def callback_motion(self, entity, attribute, old, new, kwargs):
-        illuminance = float(self.get_state('sensor.sensor_motion_fibaro_illuminance'))
-        if illuminance < 10:
-            self.call_service('light/turn_on', entity_id="light.ampoule_plafond_couloir")
-            self.call_service('light/turn_on', entity_id="light.ampoule_plafond_2_couloir")
-            self.call_service('light/turn_on', entity_id="light.ampoule_plafond_3_couloir")
-            self.run_in(self.turn_off_motion_delay, 5)
-        else:
-            self.run_in(self.turn_off_motion_delay, 5)
+        if self.get_state("input_boolean.automotionlight") == "on":
+            illuminance = float(self.get_state('sensor.motion_sensor_illuminance'))
+            if illuminance < 10:
+                self.call_service('light/turn_on', entity_id="light.ampoule_plafond_couloir")
+                self.call_service('light/turn_on', entity_id="light.ampoule_plafond_2_couloir")
+                self.call_service('light/turn_on', entity_id="light.ampoule_plafond_3_couloir")
+                self.run_in(self.turn_off_motion_delay, 5)
+            else:
+                self.run_in(self.turn_off_motion_delay, 5)
 
     def turn_off_motion_delay(self, kwargs):
-        if self.get_state("binary_sensor.sensor_motion_fibaro_home_security_motion_detection") == "on":
+        if self.get_state("binary_sensor.motion_sensor_motion_detection") == "on":
             self.run_in(self.turn_off_motion_delay, 10)  
         else:
             self.call_service('light/turn_off', entity_id="light.ampoule_plafond_couloir")

@@ -58,6 +58,7 @@ class OffpeakAutomation(hass.Hass):
     self.turn_on("light.ampoule_color_chambre_ii",  color_name = "blue")
 
   def callback_luca_sleep_2(self, entity, attribute, old, new, kwargs):
+    self.vl = 0.2
     self.turn_off("input_boolean.luca_1");
     self.turn_on("light.ampoule_color_chambre_ii",  color_name = "blue", brightness_pct = 1)
     self.call_service("media_player/media_play", entity_id = "media_player.luca_s_room")

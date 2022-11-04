@@ -5,7 +5,7 @@ import time
 class PersonAutomation(hass.Hass):
 
   def initialize(self):
-    self.mainDoor = 'sensor.fibaro_porte_dentree_access_control_door_state'
+    self.mainDoor = 'sensor.fibaro_door_window_sensor_2_door_state_2'
 
     self.hanles_person = {}
 
@@ -97,9 +97,9 @@ class PersonAutomation(hass.Hass):
       cnt += 1
 
     self.log("check_doors called")
-    windows = ['sensor.fibaro_fenetre_chambre_i_access_control_door_state', 'sensor.fibaro_fenetre_chambre_ii_access_control_door_state']
+    windows = ['sensor.fibaro_door_window_sensor_2_door_state_4', 'sensor.fibaro_door_window_sensor_2_door_state_3']
     doors = []
-    wdoors = ['sensor.fibaro_fenetre_porte_salon_access_control_door_state']
+    wdoors = ['sensor.fibaro_door_window_sensor_2_door_state']
 
     windowsDoors = []
     windowsDoors.extend(windows)
