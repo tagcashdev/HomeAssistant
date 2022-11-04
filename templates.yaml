@@ -1,0 +1,104 @@
+- binary_sensor:
+    - name: seat_bt
+      unique_id: seat_bt
+      state: "{{ this.attributes.device_connected in ['andre_fortuna', 'vanessa_fortuna'] | default(false) }}"
+      attributes:
+        mac_adresse: ""
+        device_connected: >
+          {% set persons = ['person.andre_fortuna', 'person.vanessa_fortuna'] %}
+          {% set bt_seat_mac_adresse = this.attributes.mac_adresse %}
+          {% set devices_connected = namespace(devices=[]) %}
+
+          {%- for p in persons -%}
+            {%- set device = state_attr(p, "source") | regex_replace(find='device_tracker.', replace='') -%}
+            {%- set sensor_bluetooth_connection = "sensor." ~ device ~ "_bluetooth_connection" -%}
+            {%- set p_name = p | regex_replace(find='person.', replace='') %}
+
+            {%- if state_attr(sensor_bluetooth_connection, "connected_paired_devices") is not none -%}
+              {%- for d in state_attr(sensor_bluetooth_connection, "connected_paired_devices") -%}
+                {%- if bt_seat_mac_adresse in d -%}
+                  {%- set devices_connected.devices = p_name -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if devices_connected.devices | count > 0 -%}
+            {{ devices_connected.devices }}
+          {%- else -%}
+            -
+          {%- endif -%}
+        latitude: >
+          {%- set dc = this.attributes.device_connected | default('-') -%}
+          {%- if dc == '-' -%}
+            {{ this.attributes.latitude | default(state_attr('zone.home', 'latitude')) }}
+          {%- else -%}
+            {{ state_attr("person."+dc, 'latitude') }}
+          {%- endif -%}
+        longitude: >
+          {%- set dc = this.attributes.device_connected | default('-') -%}
+          {%- if dc == '-' -%}
+            {{ this.attributes.longitude | default(state_attr('zone.home', 'longitude')) }}
+          {%- else -%}
+            {{ state_attr("person."+dc, 'longitude') }}
+          {%- endif -%}
+        gps_accuracy: >
+          {%- set dc = this.attributes.device_connected | default('-') -%}
+          {%- if dc == '-' -%}
+            {{ this.attributes.gps_accuracy | default(0) }}
+          {%- else -%}
+            {{ state_attr("person."+dc, 'gps_accuracy') }}
+          {%- endif -%}
+        entity_picture: "/local/cars/seat.jpg"
+- binary_sensor:
+    - name: tesla_lightfury_bt
+      unique_id: tesla_lightfury_bt
+      state: "{{ this.attributes.device_connected in ['andre_fortuna', 'vanessa_fortuna'] | default(false) }}"
+      attributes:
+        mac_adresse: ""
+        device_connected: >
+          {% set persons = ['person.andre_fortuna', 'person.vanessa_fortuna'] %}
+          {% set bt_seat_mac_adresse = this.attributes.mac_adresse %}
+          {% set devices_connected = namespace(devices=[]) %}
+
+          {%- for p in persons -%}
+            {%- set device = state_attr(p, "source") | regex_replace(find='device_tracker.', replace='') -%}
+            {%- set sensor_bluetooth_connection = "sensor." ~ device ~ "_bluetooth_connection" -%}
+            {%- set p_name = p | regex_replace(find='person.', replace='') %}
+
+            {%- if state_attr(sensor_bluetooth_connection, "connected_paired_devices") is not none -%}
+              {%- for d in state_attr(sensor_bluetooth_connection, "connected_paired_devices") -%}
+                {%- if bt_seat_mac_adresse in d -%}
+                  {%- set devices_connected.devices = p_name -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if devices_connected.devices | count > 0 -%}
+            {{ devices_connected.devices }}
+          {%- else -%}
+            -
+          {%- endif -%}
+        latitude: >
+          {%- set dc = this.attributes.device_connected | default('-') -%}
+          {%- if dc == '-' -%}
+            {{ this.attributes.latitude | default(state_attr('zone.home', 'latitude')) }}
+          {%- else -%}
+            {{ state_attr("person."+dc, 'latitude') }}
+          {%- endif -%}
+        longitude: >
+          {%- set dc = this.attributes.device_connected | default('-') -%}
+          {%- if dc == '-' -%}
+            {{ this.attributes.longitude | default(state_attr('zone.home', 'longitude')) }}
+          {%- else -%}
+            {{ state_attr("person."+dc, 'longitude') }}
+          {%- endif -%}
+        gps_accuracy: >
+          {%- set dc = this.attributes.device_connected | default('-') -%}
+          {%- if dc == '-' -%}
+            {{ this.attributes.gps_accuracy | default(0) }}
+          {%- else -%}
+            {{ state_attr("person."+dc, 'gps_accuracy') }}
+          {%- endif -%}
+        entity_picture: "/local/cars/tesla.jpg"

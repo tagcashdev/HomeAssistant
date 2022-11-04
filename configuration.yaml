@@ -1,0 +1,61 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+wake_on_lan:
+
+default_config:
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+utility_meter: !include utility_meters.yaml
+template: !include templates.yaml
+
+homeassistant:
+  customize: !include customize.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+bluetooth:
+
+device_tracker:
+  ### WIFI SWISSCOM ###
+  - platform: swisscom
+  ### BLUETOOTH LE ###
+  - platform: bluetooth_le_tracker
+    consider_home: 180
+    interval_seconds: 60
+    new_device_defaults:
+      track_new_devices: true
+  ### BLUETOOTH ###
+  - platform: bluetooth_tracker
+    consider_home: 180
+    interval_seconds: 60
+    new_device_defaults:
+      track_new_devices: true
+
+proximity: !include proximity.yaml
+
+tradfri:
+  host: !secret tradfri_host_ip
+
+home_connect_alt:
+  client_id: !secret home_connect_alt_client_id
+  client_secret: !secret home_connect_alt_client_secret
+  language: fr-CH
+
+# Energy tracking
+# Powercalc for power/energy estimates
+powercalc:
+  create_domain_groups:
+    - light
+    - media_player
+    - home_appliance
+sensor powercalc_label: !include powercalc.yaml
+
+group:
+  presence:
+    name: "Présence des habitants"
+    entities:
+      - device_tracker.cph2173
+      - device_tracker.cph2207
