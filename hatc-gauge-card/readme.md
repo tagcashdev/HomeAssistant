@@ -14,7 +14,7 @@
 
 ## Options
 | Name | Type | Requis | Default | Description | Options |
-| ---- | ---- | ------- | ----------- | ------- |
+| ---- | ---- | ------ | ------- | ----------- | ------- |
 | type | string | **Obligatoire** | - | `custom:hatc-gauge-card` | - |
 | entity | string | **Obligatoire** | - | `sensor.processor_temperature` | - |
 | [title](#title-options) | string/object | Optionnel | false | Permet de changer le titre de la carte, [voir exemple](#titre-simple) | false, '', hide, string, object |
@@ -22,15 +22,15 @@
 
 ## Title Options
 | Name | Type | Requis | Default | Description | Options |
-| ---- | ---- | ------- | ----------- | ------- |
+| ---- | ---- | ------ | ------- | ----------- | ------- |
 | name | string | Optionnel | - | Titre de la carte | - |
 | text-align | string | Optionnel | left | Allignement du titre de la carte | left, center, right |
 
 ## Gauge Options
 | Name | Type | Requis | Default | Description | Options |
-| ---- | ---- | ------- | ----------- | ------- |
+| ---- | ---- | ------ | ------- | ----------- | ------- |
 | max_value | string/integer | Optionnel | 100 | Permet de modifier la valeur maximum de la jauge et adapter automatiquement la position de la jauge | - |
-| text-color | string | Optionnel | black | Permet de changer la couleur du text à l'intérieur du cercle de la jauge, à noter que severity permet de changer la couleur du texte automatiquement en fonction des couleurs choisi dans l'option severity | severity, red, #ff0000, rgb(255,0,0),  |
+| text-color | string | Optionnel | black | Permet de changer la couleur du text à l'intérieur du cercle de la jauge, à noter que severity permet de changer la couleur du texte automatiquement en fonction des couleurs choisi dans l'option severity | severity, red, #ff0000, rgb(255,0,0)  |
 
 ## Examples
 
