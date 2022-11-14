@@ -13,18 +13,18 @@
 - 2
 
 ## Options
-| Name | Type | Default | Description | Options |
+| Name | Type | Requis | Default | Description | Options |
 | ---- | ---- | ------- | ----------- | ------- |
 | type | string | **Obligatoire** | `custom:hatc-gauge-card` | - |
 | entity | string | **Obligatoire** | `sensor.processor_temperature` | - |
-| [title](#title-options) | string/object | false | Permet de changer le titre de la carte, [voir exemple](#titre-simple) | false, '', hide, string, object |
-| [gauge](#gauge-options) | object | x | x | x |
+| [title](#title-options) | Optionnel | string/object | false | Permet de changer le titre de la carte, [voir exemple](#titre-simple) | false, '', hide, string, object |
+| [gauge](#gauge-options) | Optionnel | object | x | x | x |
 
 ## Title Options
-| Name | Type | Default | Description | Options |
+| Name | Type | Requis | Default | Description | Options |
 | ---- | ---- | ------- | ----------- | ------- |
-| name | string | - | Titre de la carte | - |
-| text-align | string | left | Alligment du titre de la carte | left, center, right |
+| name | string | Optionnel | - | Titre de la carte | - |
+| text-align | string | Optionnel | left | Alligment du titre de la carte | left, center, right |
 
 ## Gauge Options
 
